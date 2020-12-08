@@ -21,8 +21,10 @@ Where we let v be values, with v ::= l | (fn x e) | (fn x y e)
 ### Conditions
 Condition takes a step
 ![](doc/imgs/cond-step.png?raw=true)
+
 condition true
 ![](doc/imgs/cond-true.png?raw=true)
+
 condition false
 ![](doc/imgs/cond-false.png?raw=true)
 
