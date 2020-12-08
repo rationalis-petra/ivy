@@ -7,11 +7,15 @@ import Reducer (reduce)
 
 import Types(Expr(..), Option(..), AST(..))
 
-main = do
-  inp    <- getLine
-  raw    <- parse (lexer inp) 
-  prog   <- resolve_scope raw (\x -> None)
-  result <- reduce prog
-  print result
+import Control.Monad 
 
-
+main = do   
+    inp <- getLine  
+    if inp == "quit"
+      then return ()
+      else do
+        raw    <- parse (lexer inp) 
+        prog   <- resolve_scope raw (\x -> None)
+        result <- reduce prog
+        print result
+        main
