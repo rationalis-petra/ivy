@@ -46,12 +46,18 @@ recursive function expansion: x is the name of the function, and y is a formal p
 
 The factorial function:
 ```lisp
-(fn fact x (if (>= x 1) (* x (fact (- x 1))) 1))
+(fn fact x 
+    (if (>= x 1) 
+        (* x (fact (- x 1))) 
+        1))
 ```
 
 Take two values: x and y, return max(x, y). Apply it to arguments 3, 4
 ```
-(((fn x (fn y (if (>= x y) x y))) 3) 4)
+((
+(fn x (fn y 
+  (if (>= x y) x y))) 
+  3) 4)
 ```
 
 # Future Features
