@@ -16,25 +16,25 @@ Where op ranges over the set of operators {+, -, *, >=} and l ranges over the se
 Where we let v be values, with v ::= l | (fn x e) | (fn x y e)
 
 ### Operations
-![](ivy/doc/operations.png?raw=true)
+![](doc/operations.png?raw=true)
 
 ### Conditions
 Condition takes a step
-![](ivy/doc/cond-step.png?raw=true)
+![](doc/cond-step.png?raw=true)
 condition true
-![](ivy/doc/cond-true.png?raw=true)
+![](doc/cond-true.png?raw=true)
 condition false
-![](ivy/doc/cond-false.png?raw=true)
+![](doc/cond-false.png?raw=true)
 
 ### Functions
 left-evaluation
-![](ivy/doc/func-left.png?raw=true)
+![](doc/func-left.png?raw=true)
 
 application by name
-![](ivy/doc/func-app.png?raw=true)
+![](doc/func-app.png?raw=true)
 
 recursive function expansion: x is the name of the function, and y is a formal parameter.
-![](ivy/doc/func-recursive.png?raw=true)
+![](doc/func-recursive.png?raw=true)
 
 # TODO
 - [ ] Algebraic Data Types
