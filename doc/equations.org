@@ -1,0 +1,63 @@
+#+title: Ivy Language
+#+options: num:nil toc:nil
+
+
+
+* Expressions
+$$
+e :: \text{ l } | (\text{if } e_1\:e_2\:e_3) | (\text{fn } x\:e_1) | (\text{op } e_1\:e_2) | (e_1\:e_2)
+$$
+Where op ranges over the set of operators (+, -, *, >=) and l ranges over the set of literals 
+$\mathbb Z\cup \{nil, t\}$
+
+With $v$ the metavariable for values $\text{ l } | (\text{fn } x\:e_1)$, we then have reduction rules:
+
+* Operations
+$$
+\frac{e_1\rightarrow e_1'}{(op\:e_1\:e_2)\rightarrow(op\:e_1\:e_2)}
+$$
+
+$$
+(+\:n_1\:n_2)\rightarrow m\text{ if } m = n_1 + n_2
+$$
+$$
+(-\:n_1\:n_2)\rightarrow m\text{ if } m = n_1 - n_2
+$$
+$$
+(*\:n_1\:n_2)\rightarrow m\text{ if } m = n_1 * n_2
+$$
+$$
+(>= \:n_1\:n_2)\rightarrow t\text{ if } m = n_1 \geq n_2
+$$
+$$
+(>=\:n_1\:n_2)\rightarrow nil\text{ if } m = n_1 \ngeq n_2
+$$
+
+* Conditions
+Condition takes a step.
+$$
+\frac{e_1\rightarrow e_1'}{(\textbf{if }e_1\:e_2\:e_3)\rightarrow (\textbf{if }e_1'\:e_2\:e_3)}
+$$
+If branch (condition true)
+$$
+\frac{v\neq nil}{(\textbf{if }v\:e_2\:e_3)\rightarrow e_2}
+$$
+Else branch (condition false)
+$$
+(\textbf{if }nil\:e_2\:e_3)\rightarrow e_3
+$$
+
+* Functions
+Left-Evaluation
+$$
+\frac{e_1\rightarrow e_1'}{(e_1\:e_2)\rightarrow (e_1')}
+$$
+Application by name
+$$
+((\textbf{fn }\:x\:e_1) e_2)\rightarrow \{e_2/x\}e_1
+$$
+Recursive function: x is the name of the function, y is the parameter
+$$
+(\textbf{fn }\:x\:y\:e)\rightarrow \{(\textbf{fn }\:x\:y\:e)/x\}(\textbf{fn }\:y\:e)
+$$
+
