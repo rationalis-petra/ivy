@@ -16,25 +16,25 @@ Where op ranges over the set of operators {+, -, *, >=} and l ranges over the se
 Where we let v be values, with v ::= l | (fn x e) | (fn x y e)
 
 ### Operations
-![](doc/operations.png?raw=true)
+![](doc/imgs/operations.png?raw=true)
 
 ### Conditions
 Condition takes a step
-![](doc/cond-step.png?raw=true)
+![](doc/imgs/cond-step.png?raw=true)
 condition true
-![](doc/cond-true.png?raw=true)
+![](doc/imgs/cond-true.png?raw=true)
 condition false
-![](doc/cond-false.png?raw=true)
+![](doc/imgs/cond-false.png?raw=true)
 
 ### Functions
 left-evaluation
-![](doc/func-left.png?raw=true)
+![](doc/imgs/func-left.png?raw=true)
 
 application by name
-![](doc/func-app.png?raw=true)
+![](doc/imgs/func-app.png?raw=true)
 
 recursive function expansion: x is the name of the function, and y is a formal parameter.
-![](doc/func-recursive.png?raw=true)
+![](doc/imgs/func-recursive.png?raw=true)
 
 # TODO
 - [ ] Algebraic Data Types
