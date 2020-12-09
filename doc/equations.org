@@ -4,7 +4,7 @@
 
 * Expressions
 $$
-e :: \text{ l } | (\textbf{if } e_1\:e_2\:e_3) | (\textbf{fn } x\:e_1) | (\textbf{op } e_1\:e_2) | (e_1\:e_2)
+e :: \text{ l } | \text{ x } | (\textbf{if } e_1\:e_2\:e_3) | (\textbf{fn } x\:e_1) | (\textbf{op } e_1\:e_2) | (e_1\:e_2)
 $$
 Where op ranges over the set of operators {+, -, *, >=} and l ranges over the set of literals 
 $\mathbb Z\cup \{nil, t\}$, $v$ the values $v::= \text{ l } | (\text{fn } x\:e_1)$, 
@@ -84,14 +84,16 @@ $$
 \frac{\langle p_1, g\rangle\rightarrow \langle p_1', g'\rangle}
 {\langle p_1\:p_2, g\rangle \rightarrow \langle p_1'\:p_2, g'\rangle}
 $$
-substitution: perform only when no other reduction rule applies
-
-$$
-\frac{\langle p, g\rangle \nrightarrow \langle p', g'\rangle}{\langle p, g\rangle\to \langle gp, g\rangle} 
-\text{ if }fv(p)\subseteq dom(g)
-$$
 
 definition: add a variable to the global scope:
 $$
 \langle (\textbf{def }x\: e), g\rangle \rightarrow \langle nil, g + \{x\mapsto e\}\rangle\text{ if }x\notin dom(g)
+$$
+
+substitution: perform only when no other reduction rule applies, /and/ when it would result in substitutions being
+performed.
+
+$$
+\frac{\langle p, g\rangle \nrightarrow \langle p', g'\rangle}{\langle p, g\rangle\to \langle gp, g\rangle} 
+\text{ if }fv(p)\subseteq dom(g)\land fv(p)\neq \emptyset
 $$

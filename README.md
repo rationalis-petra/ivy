@@ -44,6 +44,38 @@ recursive function expansion: x is the name of the function, and y is a formal p
 
 ![](doc/imgs/fun-recursive.png?raw=true)
 
+## Programs/Processes
+The Ivy language defines *processs* to consist of either expressions, definitions or sequences of other processs,
+i.e.
+
+p ::= e | p1 p2 | (def x e)
+
+This means that 
+```
+(def x 1)
+(def y 2)
+```
+is a process, but
+```
+(if <condition> (def x 1) (def y 2))
+```
+is not, i.e. Seqencing and definition can only occur at the 'top level'. 
+
+Definition: define-by-name: if a value is never needed, it is not evaluated.
+
+![](doc/imgs/progn-def.png?raw-true)
+
+Sequencing
+
+![](doc/imgs/progn-discard.png?raw-true)
+![](doc/imgs/progn-seq.png?raw-true)
+
+Substitution - the definition attempts to make it so that substition only applies if:
+(a) a program is stuck.
+(b) there are free variables in the stuck program.
+
+![](doc/imgs/progn-subst.png?raw-true)
+
 # Some Examples
 2 + 3 + 4:
 ```lisp
@@ -64,7 +96,7 @@ The factorial function:
        1)))
 ```
 
-Take two values: x and y, return max(x, y). Apply it to arguments 3, 4
+Currently, functions can take only one argument. For a 'two-argument' function, we use nested functions:
 ```lisp
 (def sum (fn x (fn y 
   (if (>= x y) x y)))) 
@@ -84,7 +116,7 @@ Would not be allowed. This is primarily for purposes of practicality
 # Future Features
 - [x] A Global Store
 - [ ] Functions of multiple values
-- [ ] Typing/Type-checking
+- [ ] Types/Type-checking
 - [ ] Algebraic Data Types
 - [ ] Macros
 - [ ] Concurrency

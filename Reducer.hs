@@ -1,7 +1,7 @@
 module Reducer (reduce, eval) where
 
 import Types(Expression(..), Oper(..), IvyException(..), Progn(..), Option(..))
-import Control.Exception (Exception, throw, catch)
+import Control.Exception (Exception, throw, try)
 
 -- perform variable substitution with debrunjin indices
 subst :: Expression -> Integer -> Expression -> Expression
@@ -69,10 +69,13 @@ global_subst g expr =
 eval :: Progn -> (String -> Option Expression) -> IO (Expression, String -> Option Expression)
 eval prog g = case prog of
   Expr e -> do
-    result <- reduce e `catch` \ (Stuck v) -> (reduce (global_subst g e))
-    return (result, g)
+    result <- try (reduce e)
+    case result of
+      --- this is not a correct implementation of the substitution semantics...
+      Left (Stuck v) -> eval (Expr (global_subst g e)) g
+      Right val -> return (val, g)
   Def x e -> 
-    return (e, (\s -> if s == x then Some e else g s))
+    return (IBoolean False, (\s -> if s == x then Some e else g s))
   Seq p1 p2 -> do
     res <- eval p1 g
     eval p2 (snd res)

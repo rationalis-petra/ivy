@@ -15,11 +15,7 @@ reverse_ast x = case x of
   List xs     -> List (map reverse_ast (reverse xs))
 
 lexer :: String -> AST
-lexer string =
-  case (fst (rlexer string [] (List []))) of
-    Atom x -> Atom x
-    List [x] -> x
-    e -> e
+lexer string =(fst (rlexer string [] (List [])))
 
 
 rlexer :: String -> String -> AST -> (AST, String)
@@ -30,6 +26,10 @@ rlexer string sym ast =
                  else (reverse_ast ast, [])
   else
     case string of
+      '\n':cs -> case ast of
+                  List xs ->
+                    if sym /= [] then rlexer cs [] (List ((Atom sym):xs))
+                    else rlexer cs [] (List xs)
       ' ':cs -> case ast of
                   List xs ->
                     if sym /= [] then rlexer cs [] (List ((Atom sym):xs))
