@@ -20,22 +20,28 @@ Where we let v be values, with v ::= l | (fn x e) | (fn x y e)
 
 ### Conditions
 Condition takes a step
+
 ![](doc/imgs/cond-step.png?raw=true)
 
 condition true
+
 ![](doc/imgs/cond-true.png?raw=true)
 
 condition false
+
 ![](doc/imgs/cond-false.png?raw=true)
 
 ### Functions
 left-evaluation
+
 ![](doc/imgs/fun-left.png?raw=true)
 
 application by name
+
 ![](doc/imgs/fun-app.png?raw=true)
 
 recursive function expansion: x is the name of the function, and y is a formal parameter.
+
 ![](doc/imgs/fun-recursive.png?raw=true)
 
 # Some Examples
@@ -50,19 +56,35 @@ The factorial function:
     (if (>= x 1) 
         (* x (fact (- x 1))) 
         1))
+        
+;; alternatively
+(def fact (fn x
+   (if (>= x 1)
+       (* x (fact (- x 1)))
+       1)))
 ```
 
 Take two values: x and y, return max(x, y). Apply it to arguments 3, 4
-```
-((
-(fn x (fn y 
-  (if (>= x y) x y))) 
-  3) 4)
+```lisp
+(def sum (fn x (fn y 
+  (if (>= x y) x y)))) 
+
+((sum 3) 4)
 ```
 
+Currently, one difference between the implementation/semantics is that the semantics does not allow re-definition of
+global store values, so:
+```lisp
+(def x 5)
+(def x 10)
+```
+
+Would not be allowed. This is primarily for purposes of practicality
+
 # Future Features
-- [ ] Globally scoped functions
+- [x] A Global Store
 - [ ] Functions of multiple values
+- [ ] Typing/Type-checking
 - [ ] Algebraic Data Types
 - [ ] Macros
 - [ ] Concurrency

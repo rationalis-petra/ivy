@@ -2,8 +2,10 @@ module Types (
   IvyException(..),
   Option(..),
   Oper(..),
-  Expr(..),
-  RawExpr(..),
+  Expression(..),
+  Progn(..),
+  RawExpression(..),
+  RawProgn(..),
   AST(..)) where
 
 import Control.Exception (Exception, throw)
@@ -14,29 +16,36 @@ data Option a = None | Some a
 data Oper = Plus | Minus | GTEQ | Mul
   deriving Show
 
-data Expr = IInteger Integer
-          | IBoolean Bool
-          | Symbol Integer
-          | Op Oper Expr Expr
-          | If Expr Expr Expr
-          | App Expr Expr
-          | Fn Expr
-          | RecFn Expr
+data Expression = IInteger Integer
+  | IBoolean Bool
+  | LSymbol Integer
+  | GSymbol String
+  | Op Oper Expression Expression
+  | If Expression Expression Expression
+  | App Expression Expression
+  | Fn Expression
+  | RecFn Expression
   deriving Show
 
-data RawExpr = IInteger_Raw Integer
-          | IBoolean_Raw Bool
-          | Symbol_Raw String
-          | App_Raw RawExpr RawExpr
-          | Op_Raw Oper RawExpr RawExpr
-          | If_Raw RawExpr RawExpr RawExpr
-          | Fn_Raw String RawExpr
-          | RecFn_Raw String String RawExpr
+data Progn = Expr Expression | Seq Progn Progn | Def String Expression
+  deriving Show
+
+data RawExpression = IInteger_Raw Integer
+  | IBoolean_Raw Bool
+  | Symbol_Raw String
+  | App_Raw RawExpression RawExpression
+  | Op_Raw Oper RawExpression RawExpression
+  | If_Raw RawExpression RawExpression RawExpression
+  | Fn_Raw String RawExpression
+  | RecFn_Raw String String RawExpression
+  deriving Show
+
+data RawProgn = RawExpr RawExpression | RawSeq RawProgn RawProgn | RawDef String RawExpression
   deriving Show
 
 data AST = Atom String | List [AST]
   deriving Show
 
-data IvyException = ParseError AST | IllFormedError RawExpr | Stuck Expr
+data IvyException = ParseError AST | IllFormedError RawExpression | Stuck Expression
   deriving Show
 instance Exception IvyException

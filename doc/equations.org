@@ -2,15 +2,15 @@
 #+options: num:nil toc:nil
 
 
-
 * Expressions
 $$
-e :: \text{ l } | (\text{if } e_1\:e_2\:e_3) | (\text{fn } x\:e_1) | (\text{op } e_1\:e_2) | (e_1\:e_2)
+e :: \text{ l } | (\textbf{if } e_1\:e_2\:e_3) | (\textbf{fn } x\:e_1) | (\textbf{op } e_1\:e_2) | (e_1\:e_2)
 $$
-Where op ranges over the set of operators (+, -, *, >=) and l ranges over the set of literals 
-$\mathbb Z\cup \{nil, t\}$
+Where op ranges over the set of operators {+, -, *, >=} and l ranges over the set of literals 
+$\mathbb Z\cup \{nil, t\}$, $v$ the values $v::= \text{ l } | (\text{fn } x\:e_1)$, 
+and $x$ the variable names: alphanumeric strings minus $\{if, fn\}\cup op\cup l$ 
 
-With $v$ the metavariable for values $\text{ l } | (\text{fn } x\:e_1)$, we then have reduction rules:
+We then have reduction rules:
 
 * Operations
 $$
@@ -61,3 +61,37 @@ $$
 (\textbf{fn }\:x\:y\:e)\rightarrow \{(\textbf{fn }\:x\:y\:e)/x\}(\textbf{fn }\:y\:e)
 $$
 
+\pagebreak
+* Programs
+With all the reduction rules for expressions, we introduce a /program/, which can be:
++ an expression
++ a sequence of programs
++ a definition, which adds a name/expression to the global store
+$$
+p = e | p_1\:p_2 | (\textbf{def } x\:e)
+$$
+With reduction rules involving a pair $\langle p, g\rangle$, where $g$ is a global store, a partial 
+function $g:x\mapsto v$.
+
+discard values
+
+$$
+\langle v\: p, g\rangle\rightarrow \langle p, g\rangle
+$$
+sequence combination
+
+$$
+\frac{\langle p_1, g\rangle\rightarrow \langle p_1', g'\rangle}
+{\langle p_1\:p_2, g\rangle \rightarrow \langle p_1'\:p_2, g'\rangle}
+$$
+substitution: perform only when no other reduction rule applies
+
+$$
+\frac{\langle p, g\rangle \nrightarrow \langle p', g'\rangle}{\langle p, g\rangle\to \langle gp, g\rangle} 
+\text{ if }fv(p)\subseteq dom(g)
+$$
+
+definition: add a variable to the global scope:
+$$
+\langle (\textbf{def }x\: e), g\rangle \rightarrow \langle nil, g + \{x\mapsto e\}\rangle\text{ if }x\notin dom(g)
+$$
