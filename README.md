@@ -5,6 +5,8 @@ This is an Ivy interpreter, written in haskell. Ivy has the following generic fe
 + it is pure (no side-effects)
 
 # Semantics
+I use an operational semantics for the language, being as it is relatively easy to interpret/generate. The general form is to define a set of expressions, and a global store. Then, define a reduction relation on these expressions. I *also* define processes, which can be thought of as a superset of expressions, allowing sequencing and changing the global store.
+
 ## Expressions
 The Ivy Lanugage encompasses the set of expressions:
 
@@ -68,6 +70,7 @@ Definition: define-by-name: if a value is never needed, it is not evaluated.
 Sequencing
 
 ![](doc/imgs/progn-discard.png?raw-true)
+
 ![](doc/imgs/progn-seq.png?raw-true)
 
 Substitution - the definition attempts to make it so that substition only applies if:
@@ -104,16 +107,9 @@ Currently, functions can take only one argument. For a 'two-argument' function, 
 ((sum 3) 4)
 ```
 
-Currently, one difference between the implementation/semantics is that the semantics does not allow re-definition of
-global store values, so:
-```lisp
-(def x 5)
-(def x 10)
-```
 
-Would not be allowed. This is primarily for purposes of practicality
-
-# Future Features
+# Future Direction
+This is a project for fun/learning, but also an exercise in language design. While it certainly has a strong functional lean, the  is to create a language which is *fun*.
 - [x] A Global Store
 - [ ] Functions of multiple values
 - [ ] Types/Type-checking
