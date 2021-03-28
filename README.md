@@ -99,21 +99,10 @@ The factorial function:
        1)))
 ```
 
-Currently, functions can take only one argument. For a 'two-argument' function, we use nested functions:
+Functions can take only one argument. For a 'two-argument' function, we use nested functions:
 ```lisp
 (def sum (fn x (fn y 
   (if (>= x y) x y)))) 
 
 ((sum 3) 4)
 ```
-
-
-# Future Direction
-This is a project for fun/learning, but also an exercise in language design. While it certainly has a strong functional lean, the  is to create a language which is *fun*.
-- [x] A Global Store
-- [ ] Functions of multiple values
-- [ ] Types/Type-checking
-- [ ] Algebraic Data Types
-- [ ] Macros
-- [ ] Concurrency
-
